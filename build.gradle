@@ -3,18 +3,21 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+group = 'com.github.redwheelbarrow'
+archivesBaseName = 'obsidian'
+version = '1.0.0-SNAPSHOT'
+
 repositories {
-    jcenter()
+  jcenter()
 }
 
 dependencies {
-    testCompile "junit:junit:4.11"
+  testCompile "junit:junit:4.11"
 }
 
-/*
 task javadocJar(type:Jar, dependsOn: javadoc) {
   classifier 'javadoc'
-  from "$docsDir/javadoc"
+  from javadoc
 }
 
 task sourcesJar(type:Jar) {
@@ -36,12 +39,17 @@ uploadArchives {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
  
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-              authentication(userName: sonatypeUsername, password: sonatypePassword)
+              authentication(userName: ossrhUsername, password: ossrhPassword)
             }
- 
+            
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+              authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+            
             pom.project {
                name 'Obsidian'
                packaging 'jar'
+               description 'Obsidian DiffMatchPatch'
                url 'https://github.com/redwheelbarrow/obsidian'
  
                scm {
@@ -67,4 +75,3 @@ uploadArchives {
         }
     }
 }
-*/
